@@ -9,7 +9,8 @@ function printUsage(err) {
   if (err) {
     console.error('ERROR:', err);
   }
-  console.log('web-s searchstring');
+  console.log('USAGE:');
+  console.log('  web-s searchstring');
 }
 
 function parseArguments(args) {
@@ -20,5 +21,5 @@ function parseArguments(args) {
 if (process.argv.length >= 3) {
   parseArguments(process.argv.slice(2));
 } else {
-  printUsage();
+  printUsage('No searchstring');
 }
