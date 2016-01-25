@@ -42,7 +42,7 @@
     "lib",
     "dist"
   ],
-  "homepage": "https://github.com/liady/es6-library-minimal",
+  "homepage": "https://github.com/mstruebing/web-s",
   "devDependencies": {
     "babel": "^6.3.26",
     "babel-core": "^6.4.0",
