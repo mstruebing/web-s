@@ -75,7 +75,6 @@
     "web-s": "./bin/web-s.js"
   },
   "dependencies": {
-    "open": "0.0.5",
-    "sprintf-js": "^1.0.3"
+    "open": "0.0.5"
   }
 }
