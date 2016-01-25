@@ -22,4 +22,3 @@ if (process.argv.length >= 3) {
 } else {
   printUsage();
 }
-console.log(process.argv);
