@@ -70,6 +70,9 @@
     "name": "library",
     "entry": "/src/index.js"
   },
+  "bin": {
+    "web-s": "./index.js"
+  },
   "dependencies": {
     "open": "0.0.5",
     "sprintf-js": "^1.0.3"
