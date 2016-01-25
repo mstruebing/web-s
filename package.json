@@ -1,6 +1,6 @@
 {
   "name": "web-s",
-  "version": "0.0.11",
+  "version": "0.0.14",
   "description": "Websearch CLI",
   "main": "./index.js",
   "scripts": {
@@ -71,7 +71,8 @@
     "entry": "/src/index.js"
   },
   "bin": {
-    "web-s": "./index.js"
+    "name": "web-s",
+    "web-s": "./bin/web-s.js"
   },
   "dependencies": {
     "open": "0.0.5",

@@ -7,27 +7,25 @@
 
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
-import webpack from 'webpack';
 import pkg from './package.json';
 
 const $ = gulpLoadPlugins();
-const libFolder = 'lib';
-const libFile = pkg.library.name + '.js';
+const binFolder = 'bin';
+const binFile = pkg.bin.name + '.js';
 const sources = './src/**/*.js';
 
 gulp.task('default', ['build']);
 
-// Build as a Node library
+// Build as a Node bin
 gulp.task('build', ['lint'], () =>
   gulp.src([
     sources
   ])
     .pipe($.sourcemaps.init())
     .pipe($.babel())
-    .pipe($.concat(libFile))
+    .pipe($.concat(binFile))
     // Output files
-    .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest(libFolder))
+    .pipe(gulp.dest(binFolder))
 );
 
 // Lint javascript

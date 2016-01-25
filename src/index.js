@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import open from 'open';
 import { sprintf } from 'sprintf-js';
 
