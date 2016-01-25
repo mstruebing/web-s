@@ -1,7 +1,7 @@
 {
-  "name": "es6-library-minimal",
-  "version": "0.2.0",
-  "description": "ES6 Universal Library Starter",
+  "name": "web-s",
+  "version": "0.0.1",
+  "description": "Websearch CLI",
   "main": "./index.js",
   "scripts": {
     "prepublish": "npm run build",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/liady/es6-library-minimal.git"
+    "url": "git@github.com:mstruebing/web-s.git"
   },
   "keywords": [
     "es6",
@@ -28,8 +28,8 @@
     "universal"
   ],
   "author": {
-    "name": "Liad Yosef",
-    "url": "https://github.com/liady"
+    "name": "Max Strübing",
+    "url": "https://github.com/mstruebing"
   },
   "license": "MIT",
   "bugs": {
