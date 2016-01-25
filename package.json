@@ -69,5 +69,9 @@
   "library": {
     "name": "library",
     "entry": "/src/index.js"
+  },
+  "dependencies": {
+    "open": "0.0.5",
+    "sprintf-js": "^1.0.3"
   }
 }
