@@ -1,6 +1,6 @@
 {
   "name": "web-s",
-  "version": "0.0.15",
+  "version": "0.0.22",
   "description": "Websearch CLI",
   "main": "./index.js",
   "scripts": {
@@ -19,13 +19,11 @@
   "keywords": [
     "es6",
     "npm",
-    "starter",
-    "library",
-    "boilerplate",
-    "babel",
-    "umd",
-    "webpack",
-    "universal"
+    "websearch",
+    "cli",
+    "google",
+    "twitter",
+    "reddit"
   ],
   "author": {
     "name": "Max Strübing",
@@ -33,14 +31,14 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/liady/es6-library-minimal/issues"
+    "url": "https://github.com/mstruebing/web-s/issues"
   },
   "files": [
     "LICENSE",
     "README.md",
     "index.js",
     "lib",
-    "dist"
+    "bin"
   ],
   "homepage": "https://github.com/mstruebing/web-s",
   "devDependencies": {
@@ -71,7 +69,6 @@
     "entry": "/src/index.js"
   },
   "bin": {
-    "name": "web-s",
     "web-s": "./bin/web-s.js"
   },
   "dependencies": {

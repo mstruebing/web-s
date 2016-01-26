@@ -11,16 +11,14 @@ import pkg from './package.json';
 
 const $ = gulpLoadPlugins();
 const binFolder = 'bin';
-const binFile = pkg.bin.name + '.js';
+const binFile = pkg.library.name + '.js';
 const sources = './src/**/*.js';
 
 gulp.task('default', ['build']);
 
 // Build as a Node bin
 gulp.task('build', ['lint'], () =>
-  gulp.src([
-    sources
-  ])
+  gulp.src([sources])
     .pipe($.sourcemaps.init())
     .pipe($.babel())
     .pipe($.concat(binFile))
@@ -35,12 +33,3 @@ gulp.task('lint', () =>
     .pipe($.eslint.format())
     .pipe($.eslint.failOnError())
 );
-
-// Sets environment variable
-function setEnv(buildEnv){
-  $.env({
-    vars: {
-      BUILD_ENV: buildEnv
-    }
-  });
-}
