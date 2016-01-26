@@ -9,6 +9,21 @@ const searchEngines = {
 };
 
 /**
+ * list all available providers
+ * @param  {String} space the space in front of the output
+ * @return {void}
+ */
+function listProviders(space) {
+  for (const provider in searchEngines) {
+    if (provider !== 'google') {
+      console.log(`${space}${provider}: -${provider.substr(0, 1)}/--${provider}`);
+    } else {
+      console.log(`${space}${provider} (default)`);
+    }
+  }
+}
+
+/**
  * prints the usage and optional an error
  * @param  {string} err the error to print
  * @return {void}
@@ -17,17 +32,20 @@ function printUsage(err) {
   if (err) {
     console.error('ERROR:', err);
   }
-  console.log('USAGE:');
-  console.log(' web-s [provider] <searchstring>');
-  console.log(' WHERE');
-  console.log('  <searchstring> is the string to search for');
-  console.log('  [provider] is one of the following(default is google):');
-  console.log('  -r --reddit');
-  console.log('  -t --twitter');
+  console.log('USAGE: web-s [provider] <searchstring>');
+  console.log('Available providers:');
+  listProviders('  ');
 }
 
+/**
+ * Parses the arguments and invokes the needed functions
+ * @param  {Array} args the arguments
+ * @return {void}
+ */
 function parseArguments(args) {
   switch (args[0]) {
+    case '-l':
+    case '--list': listProviders(''); break;
     case '-h':
     case '--help': printUsage(); break;
     case '-r':
@@ -37,7 +55,6 @@ function parseArguments(args) {
     default: open(searchEngines.google + args.join(' '));
   }
 }
-
 
 if (process.argv.length >= 3) {
   parseArguments(process.argv.slice(2));
