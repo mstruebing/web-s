@@ -6,6 +6,7 @@ const searchEngines = {
   google: 'https://www.google.com/search?q=',
   twitter: 'https://twitter.com/search?src=typd&q=%23',
   reddit: 'https://www.reddit.com/search?q=',
+  stackoverflow: 'http://stackoverflow.com/search?q=',
 };
 
 /**
@@ -50,6 +51,8 @@ function parseArguments(args) {
     case '--help': printUsage(); break;
     case '-r':
     case '--reddit': open(searchEngines.reddit + args.slice(1).join(' ')); break;
+    case '-s':
+    case '--stackoverflow': open(searchEngines.stackoverflow + args.slice(1).join(' ')); break;
     case '-t':
     case '--twitter': open(searchEngines.twitter + args[1]); break;
     default: open(searchEngines.google + args.join(' '));
