@@ -3,7 +3,7 @@
 import open from 'open';
 
 const ALL_ARGS = 0;
-const ALL_EXECPT_FIRST_ARG = 1;
+const ALL_EXCEPT_FIRST_ARG = 1;
 
 const searchEngines = {
   google: {
@@ -13,17 +13,17 @@ const searchEngines = {
   },
   twitter: {
     url: 'https://twitter.com/search?src=typd&q=%23',
-    args: ALL_EXECPT_FIRST_ARG,
+    args: ALL_EXCEPT_FIRST_ARG,
     shortHand: 't',
   },
   reddit: {
     url: 'https://www.reddit.com/search?q=',
-    args: ALL_EXECPT_FIRST_ARG,
+    args: ALL_EXCEPT_FIRST_ARG,
     shortHand: 'r',
   },
   stackoverflow: {
     url: 'http://stackoverflow.com/search?q=',
-    args: ALL_EXECPT_FIRST_ARG,
+    args: ALL_EXCEPT_FIRST_ARG,
     shortHand: 's',
   },
 };
@@ -55,6 +55,11 @@ function printUsage(err) {
   console.log('USAGE: web-s [provider] <searchstring>');
   console.log('Available providers:');
   listProviders('  ');
+
+  // return with exit status 1 if an error occured
+  if (err) {
+    process.exit(1);
+  }
 }
 
 /**
@@ -68,7 +73,7 @@ function openBrowser(provider, args) {
 
   if (provider.args === ALL_ARGS) {
     url = provider.url + args.join(' ');
-  } else if (provider.args === ALL_EXECPT_FIRST_ARG) {
+  } else if (provider.args === ALL_EXCEPT_FIRST_ARG) {
     url = provider.url + args.slice(1).join(' ');
   }
 
