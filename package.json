@@ -1,6 +1,6 @@
 {
   "name": "web-s",
-  "version": "0.0.25",
+  "version": "0.0.27",
   "description": "Websearch CLI",
   "main": "./index.js",
   "scripts": {

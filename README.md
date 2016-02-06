@@ -8,6 +8,7 @@ A Node-CLI to do websearches
 provider can be:
 * -t / --twitter for a twitter search
 * -r / --reddit for a reddit search
+* -s / --stackoverflow for a stackoverflow search
 
 `web-s <-l|--list>` to list all available providers.
 
