@@ -34,7 +34,6 @@ const searchEngines = {
  * @return {void}
  */
 function listProviders(space) {
-  // Wilhelms try
   Object.keys(searchEngines)
     .map(provider => (
         searchEngines[provider].shortHand === 'default'

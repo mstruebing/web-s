@@ -6,6 +6,7 @@
   "scripts": {
     "prepublish": "npm run build",
     "build": "gulp build",
+    "watch": "gulp watch",
     "unit": "mocha --compilers js:babel-core/register --colors ./test/*.spec.js",
     "unit-watch": "mocha --compilers js:babel-core/register --colors -w ./test/*.spec.js",
     "test": "npm run unit-watch"
@@ -59,8 +60,7 @@
     "gulp-load-plugins": "^1.2.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-util": "^3.0.6",
-    "mocha": "^2.3.4",
-    "webpack": "^1.12.11"
+    "mocha": "^2.3.4"
   },
   "library": {
     "name": "library",

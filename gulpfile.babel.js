@@ -33,3 +33,9 @@ gulp.task('lint', () =>
     .pipe($.eslint.format())
     .pipe($.eslint.failOnError())
 );
+
+// Rerun the task when a file changes
+gulp.task('watch', function() {
+  // gulp.watch(sources, ['lint']);
+  gulp.watch(sources, ['build']);
+});
