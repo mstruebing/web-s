@@ -2,11 +2,30 @@
 
 import open from 'open';
 
+const ALL_ARGS = 0;
+const ALL_EXECPT_FIRST_ARG = 1;
+
 const searchEngines = {
-  google: 'https://www.google.com/search?q=',
-  twitter: 'https://twitter.com/search?src=typd&q=%23',
-  reddit: 'https://www.reddit.com/search?q=',
-  stackoverflow: 'http://stackoverflow.com/search?q=',
+  google: {
+    url: 'https://www.google.com/search?q=',
+    args: ALL_ARGS,
+    shortHand: 'default',
+  },
+  twitter: {
+    url: 'https://twitter.com/search?src=typd&q=%23',
+    args: ALL_EXECPT_FIRST_ARG,
+    shortHand: 't',
+  },
+  reddit: {
+    url: 'https://www.reddit.com/search?q=',
+    args: ALL_EXECPT_FIRST_ARG,
+    shortHand: 'r',
+  },
+  stackoverflow: {
+    url: 'http://stackoverflow.com/search?q=',
+    args: ALL_EXECPT_FIRST_ARG,
+    shortHand: 's',
+  },
 };
 
 /**
@@ -15,13 +34,14 @@ const searchEngines = {
  * @return {void}
  */
 function listProviders(space) {
-  for (const provider in searchEngines) {
-    if (provider !== 'google') {
-      console.log(`${space}${provider}: -${provider.substr(0, 1)}/--${provider}`);
-    } else {
-      console.log(`${space}${provider} (default)`);
-    }
-  }
+  // Wilhelms try
+  Object.keys(searchEngines)
+    .map(provider => (
+        searchEngines[provider].shortHand === 'default'
+        ? `${space}${provider} (default)`
+        : `${space}${provider}: -${searchEngines[provider].shortHand}/--${provider}`
+      ))
+    .forEach(line => console.log(line));
 }
 
 /**
@@ -39,6 +59,26 @@ function printUsage(err) {
 }
 
 /**
+ * joins the arguments dependent on the provider and opens the default webbrowser
+ * @param  {object} provider
+ * @param  {array} args the cli arguments
+ * @return {void}
+ */
+function openBrowser(provider, args) {
+  let url = 0;
+
+  if (provider.args === ALL_ARGS) {
+    url = provider.url + args.join(' ');
+  } else if (provider.args === ALL_EXECPT_FIRST_ARG) {
+    url = provider.url + args.slice(1).join(' ');
+  }
+
+  if (url) {
+    open(url);
+  }
+}
+
+/**
  * Parses the arguments and invokes the needed functions
  * @param  {Array} args the arguments
  * @return {void}
@@ -50,12 +90,12 @@ function parseArguments(args) {
     case '-h':
     case '--help': printUsage(); break;
     case '-r':
-    case '--reddit': open(searchEngines.reddit + args.slice(1).join(' ')); break;
+    case '--reddit': openBrowser(searchEngines.reddit, args); break;
     case '-s':
-    case '--stackoverflow': open(searchEngines.stackoverflow + args.slice(1).join(' ')); break;
+    case '--stackoverflow': openBrowser(searchEngines.stackoverflow, args); break;
     case '-t':
-    case '--twitter': open(searchEngines.twitter + args[1]); break;
-    default: open(searchEngines.google + args.join(' '));
+    case '--twitter': openBrowser(searchEngines.twitter, args); break;
+    default: openBrowser(searchEngines.google, args);
   }
 }
 
