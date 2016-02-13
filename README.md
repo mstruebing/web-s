@@ -6,11 +6,12 @@ A Node-CLI to do websearches
 ## USAGE
 `web-s [provider] <searchstring>`
 provider can be:
+* -l / --leo for leo.org search
 * -t / --twitter for a twitter search
 * -r / --reddit for a reddit search
 * -s / --stackoverflow for a stackoverflow search
 
-`web-s <-l|--list>` to list all available providers.
+`web-s --list` to list all available providers.
 
 __if no option is given the default provider is google__
 

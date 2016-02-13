@@ -26,6 +26,11 @@ const searchEngines = {
     args: ALL_EXCEPT_FIRST_ARG,
     shortHand: 's',
   },
+  leo: {
+    url: 'http://dict.leo.org/ende/index_de.html#/search=',
+    args: ALL_EXCEPT_FIRST_ARG,
+    shortHand: 'l',
+  },
 };
 
 /**
@@ -89,10 +94,11 @@ function openBrowser(provider, args) {
  */
 function parseArguments(args) {
   switch (args[0]) {
-    case '-l':
     case '--list': listProviders(''); break;
     case '-h':
     case '--help': printUsage(); break;
+    case '-l':
+    case '--leo': openBrowser(searchEngines.leo, args); break;
     case '-r':
     case '--reddit': openBrowser(searchEngines.reddit, args); break;
     case '-s':
