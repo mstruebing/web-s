@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 
 import open from 'open';
+import fs from 'fs';
 
 const ALL_ARGS = 0;
 const ALL_EXCEPT_FIRST_ARG = 1;
+const CONFIG_FILE = `${process.env.HOME}/.web-s.conf`;
 
-const searchEngines = {
+const sampleConfig = {
   google: {
     url: 'https://www.google.com/search?q=',
     args: ALL_ARGS,
@@ -60,18 +62,13 @@ function printUsage(err) {
   console.log('USAGE: web-s [provider] <searchstring>');
   console.log('Available providers:');
   listProviders('  ');
-
-  // return with exit status 1 if an error occured
-  if (err) {
-    process.exit(1);
-  }
 }
 
 /**
  * joins the arguments dependent on the provider and opens the default webbrowser
  * @param  {object} provider
  * @param  {array} args the cli arguments
- * @return {void}
+ * @return {true}
  */
 function openBrowser(provider, args) {
   let url = 0;
@@ -85,6 +82,8 @@ function openBrowser(provider, args) {
   if (url) {
     open(url);
   }
+
+  return true;
 }
 
 /**
@@ -94,21 +93,64 @@ function openBrowser(provider, args) {
  */
 function parseArguments(args) {
   switch (args[0]) {
+    case '--generate-config': break;
     case '--list': listProviders(''); break;
     case '-h':
     case '--help': printUsage(); break;
-    case '-l':
-    case '--leo': openBrowser(searchEngines.leo, args); break;
-    case '-r':
-    case '--reddit': openBrowser(searchEngines.reddit, args); break;
-    case '-s':
-    case '--stackoverflow': openBrowser(searchEngines.stackoverflow, args); break;
-    case '-t':
-    case '--twitter': openBrowser(searchEngines.twitter, args); break;
-    default: openBrowser(searchEngines.google, args);
+    default: detetermineProvider(args);
   }
 }
 
+function detetermineProvider(args) {
+  let opened = false;
+
+  Object.keys(searchEngines).forEach((provider) => {
+    console.log(provider);
+    if (`-${searchEngines[provider].shortHand}` === args[0] || `--${provider}` === args[0]) {
+      opened = openBrowser(searchEngines[provider], args);
+    }
+  });
+
+  if (!opened) {
+    openBrowser(searchEngines.google, args)
+  }
+}
+
+/**
+ * checks if a config exists
+ * @return {Boolean}
+ */
+function configExist() {
+  let fileExist = false
+  try {
+    fileExist = fs.statSync(CONFIG_FILE).isFile();
+  } finally {
+    return fileExist;
+  }
+}
+
+/**
+ * creates a sample config
+ * @return {void}
+ */
+function createSampleConfig() {
+  const config = JSON.stringify(sampleConfig, null, 2);
+  fs.writeFileSync(CONFIG_FILE, config);
+}
+
+/**
+ * reads the config file
+ * @return {Object}
+ */
+function readConfig() {
+  return JSON.parse(fs.readFileSync(CONFIG_FILE, 'utf8'));
+}
+
+if (!configExist()) {
+  createSampleConfig();
+}
+
+const searchEngines = readConfig();
 if (process.argv.length >= 3) {
   parseArguments(process.argv.slice(2));
 } else {
