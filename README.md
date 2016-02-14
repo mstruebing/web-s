@@ -22,6 +22,7 @@ this will open your default webbrowser and do a search on the given provider
 This tool will place a `.web-s.conf` file in your home directory.
 This is a simple text file which will be parsed and used.
 You can simply extend this file with more providers as you wish.
+The searchstring from the CLI will occur at the position `%HERE%` in the provider url.
 
 ## License
 MIT
