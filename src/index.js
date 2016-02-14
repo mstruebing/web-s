@@ -93,7 +93,7 @@ function openBrowser(provider, args) {
  */
 function parseArguments(args) {
   switch (args[0]) {
-    case '--generate-config': break;
+    case '--generate-config': generateNewConfig(); break;
     case '--list': listProviders(''); break;
     case '-h':
     case '--help': printUsage(); break;
@@ -101,20 +101,40 @@ function parseArguments(args) {
   }
 }
 
+
 function detetermineProvider(args) {
   let opened = false;
+  let defaultProvider = false;
 
   Object.keys(searchEngines).forEach((provider) => {
     console.log(provider);
     if (`-${searchEngines[provider].shortHand}` === args[0] || `--${provider}` === args[0]) {
       opened = openBrowser(searchEngines[provider], args);
     }
+    if (`${searchEngines[provider].shortHand}` === 'default') {
+      defaultProvider = provider;
+    }
   });
 
   if (!opened) {
-    openBrowser(searchEngines.google, args)
+    console.log('defaultProvider', defaultProvider);
+    openBrowser(searchEngines[defaultProvider], args)
   }
 }
+
+
+/**
+ * Generates a new config-file
+ * @return {void}
+ */
+function generateNewConfig() {
+  if (configExist()) {
+    fs.unlinkSync(CONFIG_FILE);
+  }
+
+  createInitConfig();
+}
+
 
 /**
  * checks if a config exists
@@ -129,11 +149,12 @@ function configExist() {
   }
 }
 
+
 /**
  * creates a sample config
  * @return {void}
  */
-function createSampleConfig() {
+function createInitConfig() {
   const config = JSON.stringify(sampleConfig, null, 2);
   fs.writeFileSync(CONFIG_FILE, config);
 }
@@ -146,8 +167,9 @@ function readConfig() {
   return JSON.parse(fs.readFileSync(CONFIG_FILE, 'utf8'));
 }
 
+
 if (!configExist()) {
-  createSampleConfig();
+  createInitConfig();
 }
 
 const searchEngines = readConfig();
