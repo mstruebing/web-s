@@ -5,7 +5,7 @@ import fs from 'fs';
 
 const CONFIG_FILE = `${process.env.HOME}/.web-s.conf`;
 
-const sampleConfig = {
+const initConfig = {
   google: {
     url: 'https://www.google.com/search?q=',
     shortHand: 'default',
@@ -151,8 +151,8 @@ function configExist() {
  * @return {void}
  */
 function createInitConfig() {
-  const config = JSON.stringify(sampleConfig, null, 2);
-  fs.writeFileSync(CONFIG_FILE, config);
+  const config = JSON.stringify(initConfig, null, 2);
+  fs.writeFile(CONFIG_FILE, config);
 }
 
 /**
@@ -163,12 +163,15 @@ function readConfig() {
   return JSON.parse(fs.readFileSync(CONFIG_FILE, 'utf8'));
 }
 
+let searchEngines;
 
 if (!configExist()) {
   createInitConfig();
+  searchEngines = initConfig;
+} else {
+  searchEngines = readConfig();
 }
 
-const searchEngines = readConfig();
 if (process.argv.length >= 3) {
   parseArguments(process.argv.slice(2));
 } else {
