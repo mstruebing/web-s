@@ -7,23 +7,23 @@ const CONFIG_FILE = `${process.env.HOME}/.web-s.conf`;
 
 const initConfig = {
   google: {
-    url: 'https://www.google.com/search?q=',
+    url: 'https://www.google.com/search?q=%HERE%',
     shortHand: 'default',
   },
   twitter: {
-    url: 'https://twitter.com/search?src=typd&q=%23',
+    url: 'https://twitter.com/search?src=typd&q=%23%HERE%',
     shortHand: 't',
   },
   reddit: {
-    url: 'https://www.reddit.com/search?q=',
+    url: 'https://www.reddit.com/search?q=%HERE%',
     shortHand: 'r',
   },
   stackoverflow: {
-    url: 'http://stackoverflow.com/search?q=',
+    url: 'http://stackoverflow.com/search?q=%HERE%',
     shortHand: 's',
   },
   leo: {
-    url: 'http://dict.leo.org/ende/index_de.html#/search=',
+    url: 'http://dict.leo.org/ende/index_de.html#/search=%HERE%',
     shortHand: 'l',
   },
 };
@@ -67,9 +67,9 @@ function openBrowser(provider, args) {
   let url = 0;
 
   if (provider.shortHand === 'default') {
-    url = provider.url + args.join(' ');
+    url = provider.url.replace('%HERE%', args.join(' '));
   } else {
-    url = provider.url + args.slice(1).join(' ');
+    url = provider.url.replace('%HERE%', args.slice(1).join(' '));
   }
 
   if (url) {
