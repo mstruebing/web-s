@@ -2,6 +2,7 @@
 
 import open from 'open';
 import fs from 'fs';
+import readline from 'readline';
 
 const CONFIG_FILE = `${process.env.HOME}/.web-s.conf`;
 
@@ -163,17 +164,60 @@ function readConfig() {
   return JSON.parse(fs.readFileSync(CONFIG_FILE, 'utf8'));
 }
 
+/**
+ * checks if a config is valid
+ * @param  {Object} searchEngines
+ * @return {Boolean}
+ */
+function configValid() {
+  const shortHands = [];
+  const providers = [];
+
+  Object.keys(searchEngines).forEach((provider) => {
+    shortHands.push(searchEngines[provider].shortHand);
+    providers.push(provider);
+  });
+
+  return !hasDuplicates(shortHands) && !hasDuplicates(providers);
+}
+
+/**
+ * Checks if a config has duplicate entries
+ * @param  {Array}  array
+ * @return {Boolean}
+ */
+function hasDuplicates(array) {
+  return (new Set(array)).size !== array.length;
+}
+
+
+// TODO: Refactor, global searchEngines?
+// break down into more functions?
 let searchEngines;
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 
 if (!configExist()) {
   createInitConfig();
   searchEngines = initConfig;
 } else {
   searchEngines = readConfig();
-}
-
-if (process.argv.length >= 3) {
-  parseArguments(process.argv.slice(2));
-} else {
-  printUsage('No searchstring');
+  if (configValid()) {
+    if (process.argv.length >= 3) {
+      parseArguments(process.argv.slice(2));
+    } else {
+      printUsage('No searchstring');
+    }
+  } else {
+    console.log('There is an error in your config file (~/.web-s.conf)');
+    rl.question('Should we create a new one? (Y/N): ', (answer) => {
+      if (answer.toUpperCase() === 'Y') {
+        createInitConfig();
+      }
+      rl.close();
+    });
+  }
 }
